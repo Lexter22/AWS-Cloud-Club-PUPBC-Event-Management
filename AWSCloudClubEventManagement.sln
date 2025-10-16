@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AWSCloudClub_Common", "AWSCloudClub_Common\AWSCloudClub_Common.csproj", "{7E07984A-6E7D-4010-B9BE-A53ACC1C8767}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AWSCloudClub_DataService", "AWSCloudClub_DataService\AWSCloudClub_DataService.csproj", "{CF0CD9B2-F25C-4BBC-9660-9966B62E95FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AWSCloudClub_BusinessLogic", "AWSCloudClub_BusinessLogic\AWSCloudClub_BusinessLogic.csproj", "{1CFD2780-C54B-4708-9D09-64AACE994421}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AWSCloudClub_WebAPI", "AWSCloudClub_WebAPI\AWSCloudClub_WebAPI.csproj", "{BA9ED1B3-B0E9-4062-81B8-5B686AA8FEB3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E07984A-6E7D-4010-B9BE-A53ACC1C8767}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E07984A-6E7D-4010-B9BE-A53ACC1C8767}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E07984A-6E7D-4010-B9BE-A53ACC1C8767}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E07984A-6E7D-4010-B9BE-A53ACC1C8767}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF0CD9B2-F25C-4BBC-9660-9966B62E95FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF0CD9B2-F25C-4BBC-9660-9966B62E95FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF0CD9B2-F25C-4BBC-9660-9966B62E95FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF0CD9B2-F25C-4BBC-9660-9966B62E95FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CFD2780-C54B-4708-9D09-64AACE994421}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CFD2780-C54B-4708-9D09-64AACE994421}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CFD2780-C54B-4708-9D09-64AACE994421}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CFD2780-C54B-4708-9D09-64AACE994421}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA9ED1B3-B0E9-4062-81B8-5B686AA8FEB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA9ED1B3-B0E9-4062-81B8-5B686AA8FEB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA9ED1B3-B0E9-4062-81B8-5B686AA8FEB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA9ED1B3-B0E9-4062-81B8-5B686AA8FEB3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,6 @@
+@AWSCloudClub_WebAPI_HostAddress = http://localhost:5183
+
+GET {{AWSCloudClub_WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

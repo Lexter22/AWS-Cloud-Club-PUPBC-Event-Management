@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../buildMultiTargeting/AWSCloudClub_WebAPI.props" />
+</Project>

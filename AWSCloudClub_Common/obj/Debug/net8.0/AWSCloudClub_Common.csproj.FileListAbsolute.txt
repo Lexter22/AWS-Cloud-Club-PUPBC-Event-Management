@@ -1,0 +1,11 @@
+/Users/johnlexterbartolome/Codes/AWSCloudClub/AWSCloudClubEventManagement/AWSCloudClub_Common/bin/Debug/net8.0/AWSCloudClub_Common.deps.json
+/Users/johnlexterbartolome/Codes/AWSCloudClub/AWSCloudClubEventManagement/AWSCloudClub_Common/bin/Debug/net8.0/AWSCloudClub_Common.dll
+/Users/johnlexterbartolome/Codes/AWSCloudClub/AWSCloudClubEventManagement/AWSCloudClub_Common/bin/Debug/net8.0/AWSCloudClub_Common.pdb
+/Users/johnlexterbartolome/Codes/AWSCloudClub/AWSCloudClubEventManagement/AWSCloudClub_Common/obj/Debug/net8.0/AWSCloudClub_Common.GeneratedMSBuildEditorConfig.editorconfig
+/Users/johnlexterbartolome/Codes/AWSCloudClub/AWSCloudClubEventManagement/AWSCloudClub_Common/obj/Debug/net8.0/AWSCloudClub_Common.AssemblyInfoInputs.cache
+/Users/johnlexterbartolome/Codes/AWSCloudClub/AWSCloudClubEventManagement/AWSCloudClub_Common/obj/Debug/net8.0/AWSCloudClub_Common.AssemblyInfo.cs
+/Users/johnlexterbartolome/Codes/AWSCloudClub/AWSCloudClubEventManagement/AWSCloudClub_Common/obj/Debug/net8.0/AWSCloudClub_Common.csproj.CoreCompileInputs.cache
+/Users/johnlexterbartolome/Codes/AWSCloudClub/AWSCloudClubEventManagement/AWSCloudClub_Common/obj/Debug/net8.0/AWSCloudClub_Common.dll
+/Users/johnlexterbartolome/Codes/AWSCloudClub/AWSCloudClubEventManagement/AWSCloudClub_Common/obj/Debug/net8.0/refint/AWSCloudClub_Common.dll
+/Users/johnlexterbartolome/Codes/AWSCloudClub/AWSCloudClubEventManagement/AWSCloudClub_Common/obj/Debug/net8.0/AWSCloudClub_Common.pdb
+/Users/johnlexterbartolome/Codes/AWSCloudClub/AWSCloudClubEventManagement/AWSCloudClub_Common/obj/Debug/net8.0/ref/AWSCloudClub_Common.dll
