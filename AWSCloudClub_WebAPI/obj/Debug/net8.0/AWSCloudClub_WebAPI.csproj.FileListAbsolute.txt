@@ -68,3 +68,4 @@
 /Users/johnlexterbartolome/Codes/AWSCloudClub/AWSCloudClubEventManagement/AWSCloudClub_WebAPI/obj/Debug/net8.0/AWSCloudClub_WebAPI.pdb
 /Users/johnlexterbartolome/Codes/AWSCloudClub/AWSCloudClubEventManagement/AWSCloudClub_WebAPI/obj/Debug/net8.0/AWSCloudClub_WebAPI.genruntimeconfig.cache
 /Users/johnlexterbartolome/Codes/AWSCloudClub/AWSCloudClubEventManagement/AWSCloudClub_WebAPI/obj/Debug/net8.0/ref/AWSCloudClub_WebAPI.dll
+/Users/johnlexterbartolome/Codes/AWSCloudClub/AWSCloudClubEventManagement/AWSCloudClub_WebAPI/bin/Debug/net8.0/appsettings.example.json
