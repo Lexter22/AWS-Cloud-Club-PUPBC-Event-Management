@@ -20,25 +20,12 @@ namespace AWSCloudClubEventManagement.Controllers
         [HttpPost("add")]
         public IActionResult AddMember(Members member)
         {
-            if (member == null ||
-                string.IsNullOrEmpty(member.MemberID) ||
-                string.IsNullOrEmpty(member.FirstName) ||
-                string.IsNullOrEmpty(member.LastName) ||
-                string.IsNullOrEmpty(member.Email) ||
-                string.IsNullOrEmpty(member.MembersPassword))
-            {
-                return BadRequest("Invalid member data!");
-            }
-
-            bool isAdded = _memberBusiness.AddMember(member);
-            if (isAdded)
-            {
+            var (success, errorMessage) = _memberBusiness.AddMember(member);
+            
+            if (success)
                 return Ok("Member added successfully.");
-            }
-            else
-            {
-                return StatusCode(500, "Failed to add member!");
-            }
+            
+            return BadRequest(errorMessage);
         }
 
         [HttpGet("GetAllMembers")]
@@ -50,45 +37,36 @@ namespace AWSCloudClubEventManagement.Controllers
         [HttpGet("SeacrchMemberByEmail")]
         public IActionResult SearchMemberByEmail(string email)
         {
-            if (string.IsNullOrEmpty(email))
-            {
-                return BadRequest("Email is required!");
-            }
-
-            var member = _memberBusiness.GetMemberByEmail(email);
-            if (member != null)
-            {
-                return Ok(member);
-            }
-            return NotFound("Member not found!");
+            var (member, errorMessage) = _memberBusiness.GetMemberByEmail(email);
+            
+            if (!string.IsNullOrEmpty(errorMessage))
+                return BadRequest(errorMessage);
+            
+            if (member == null)
+                return NotFound("Member not found!");
+            
+            return Ok(member);
         }
         [HttpDelete("delete/{memberID}")]
         public IActionResult RemoveMember(string memberID)
         {
-            if (string.IsNullOrEmpty(memberID))
-            {
-                return BadRequest("MemberID is required!");
-            }
-
-            _memberBusiness.RemoveMember(memberID);
-            return Ok("Member removed successfully!");
+            var (success, errorMessage) = _memberBusiness.RemoveMember(memberID);
+            
+            if (success)
+                return Ok("Member removed successfully!");
+            
+            return BadRequest(errorMessage);
         }
+        
         [HttpPost("ChangePassword/{memberID}")]
         public IActionResult ChangePassword(string memberID, [FromBody] string newPassword)
         {
-            if (string.IsNullOrEmpty(memberID) || string.IsNullOrEmpty(newPassword))
-            {
-                return BadRequest("MemberID and new password are required!");
-            }
-
-            var member = _memberBusiness.GetMemberByEmail(memberID);
-            if (member == null)
-            {
-                return NotFound("Member not found!");
-            }
-
-            _memberBusiness.ChangePassword(member.Email, newPassword);
-            return Ok("Password changed successfully.");
+            var (success, errorMessage) = _memberBusiness.ChangePassword(memberID, newPassword);
+            
+            if (success)
+                return Ok("Password changed successfully.");
+            
+            return BadRequest(errorMessage);
         }
     }
 }

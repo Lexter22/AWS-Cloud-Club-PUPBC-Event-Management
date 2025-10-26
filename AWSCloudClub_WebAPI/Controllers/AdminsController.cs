@@ -19,26 +19,12 @@ namespace AWSCloudClubEventManagement.Controllers
         [HttpPost("add")]
         public IActionResult AddAdmin(Admins admin)
         {
-            if (admin == null ||
-                string.IsNullOrEmpty(admin.AdminID) ||
-                string.IsNullOrEmpty(admin.FirstName) ||
-                string.IsNullOrEmpty(admin.LastName) ||
-                string.IsNullOrEmpty(admin.Email) ||
-                string.IsNullOrEmpty(admin.AdminsPassword) ||
-                string.IsNullOrEmpty(admin.Role))
-            {
-                return BadRequest("Invalid admin data.");
-            }
-
-            bool isAdded = _adminBusiness.CreateAdmin(admin);
-            if (isAdded)
-            {
+            var (success, errorMessage) = _adminBusiness.CreateAdmin(admin);
+            
+            if (success)
                 return Ok("Admin added successfully.");
-            }
-            else
-            {
-                return StatusCode(500, "Failed to add admin.");
-            }
+            
+            return BadRequest(errorMessage);
         }
 
         [HttpGet("all")]
@@ -47,23 +33,18 @@ namespace AWSCloudClubEventManagement.Controllers
             var admins = _adminBusiness.GetAllAdmins();
             return Ok(admins);
         }
-    [HttpGet("search")]
-    public IActionResult SearchAdminByEmail(string email)
+        [HttpGet("search")]
+        public IActionResult SearchAdminByEmail(string email)
         {
-            if (string.IsNullOrEmpty(email))
-            {
-                return BadRequest("Email parameter is required.");
-            }
-
-            var admin = _adminBusiness.GetAdminByEmail(email);
-            if (admin != null)
-            {
-                return Ok(admin);
-            }
-            else
-            {
+            var (admins, errorMessage) = _adminBusiness.GetAdminByEmail(email);
+            
+            if (!string.IsNullOrEmpty(errorMessage))
+                return BadRequest(errorMessage);
+            
+            if (admins == null || admins.Count == 0)
                 return NotFound("Admin not found!");
-            }
+            
+            return Ok(admins);
         }
     }
 }

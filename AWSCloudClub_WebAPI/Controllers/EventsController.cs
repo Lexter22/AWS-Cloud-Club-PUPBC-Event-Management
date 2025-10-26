@@ -28,16 +28,12 @@ namespace AWSCloudClubEventManagement.API.Controllers
                 return BadRequest("Invalid event data.");
             }
 
-            try
-            {
-                var id = _eventBusiness.CreateEvent(eventItem);
-                if (string.IsNullOrEmpty(id)) return Conflict("EventID already exists or invalid.");
-                return Ok(new { message = "Event added successfully.", eventId = id });
-            }
-            catch
-            {
-                return StatusCode(500, "Failed to add event.");
-            }
+            var (eventId, errorMessage) = _eventBusiness.CreateEvent(eventItem);
+            
+            if (!string.IsNullOrEmpty(errorMessage))
+                return BadRequest(errorMessage);
+            
+            return Ok(new { message = "Event added successfully.", eventId });
         }
 
         [HttpGet("all")]
@@ -54,15 +50,15 @@ namespace AWSCloudClubEventManagement.API.Controllers
             {
                 return BadRequest("EventID parameter is required.");
             }
-            var results = _eventBusiness.SearchEventByID(EventID);
-            if (results != null && results.Count > 0)
-            {
-                return Ok(results[0]);
-            }
-            else
-            {
+            var (events, errorMessage) = _eventBusiness.SearchEventByID(EventID);
+            
+            if (!string.IsNullOrEmpty(errorMessage))
+                return BadRequest(errorMessage);
+            
+            if (events.Count == 0)
                 return NotFound("Event not found.");
-            }
+            
+            return Ok(events[0]);
         }
     [HttpDelete("{eventId}")]
     public IActionResult RemoveEvent(string eventId)
@@ -72,15 +68,12 @@ namespace AWSCloudClubEventManagement.API.Controllers
                 return BadRequest("EventID is required.");
             }
 
-            try
-            {
-                _eventBusiness.RemoveEvent(eventId);
+            var (success, errorMessage) = _eventBusiness.RemoveEvent(eventId);
+            
+            if (success)
                 return Ok("Event removed successfully.");
-            }
-            catch
-            {
-                return StatusCode(500, "Failed to remove event.");
-            }
+            
+            return BadRequest(errorMessage);
         }
     [HttpPut("{eventId}")]
         public async Task<IActionResult> UpdateEvent(string eventId, Events eventItem)
@@ -94,16 +87,12 @@ namespace AWSCloudClubEventManagement.API.Controllers
                 return BadRequest("Invalid event data. EventID is required in the route and body should contain fields to update.");
             }
 
-            try
-            {
-                var ok = await _eventBusiness.UpdateEventAsync(eventId, eventItem);
-                if (ok) return Ok("Event updated successfully.");
-                return NotFound("Event not found.");
-            }
-            catch
-            {
-                return StatusCode(500, "Failed to update event.");
-            }
+            var (success, errorMessage) = await _eventBusiness.UpdateEventAsync(eventId, eventItem);
+            
+            if (success)
+                return Ok("Event updated successfully.");
+            
+            return BadRequest(errorMessage);
         }
     }
 }

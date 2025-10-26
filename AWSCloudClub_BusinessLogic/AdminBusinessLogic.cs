@@ -14,13 +14,35 @@ namespace AWSCloudClub_BusinessLogic
             _dataService = dataService;
         }
 
-        public bool CreateAdmin(Admins admin)
+        public (bool Success, string ErrorMessage) CreateAdmin(Admins admin)
         {
-            if (admin == null) return false;
-            if (string.IsNullOrWhiteSpace(admin.AdminID) || string.IsNullOrWhiteSpace(admin.Email)) return false;
+            // Validation
+            if (admin == null)
+                return (false, "Admin data is required.");
+            
+            if (string.IsNullOrWhiteSpace(admin.AdminID))
+                return (false, "AdminID is required.");
+            
+            if (string.IsNullOrWhiteSpace(admin.FirstName))
+                return (false, "First name is required.");
+            
+            if (string.IsNullOrWhiteSpace(admin.LastName))
+                return (false, "Last name is required.");
+            
+            if (string.IsNullOrWhiteSpace(admin.Email))
+                return (false, "Email is required.");
+            
+            if (string.IsNullOrWhiteSpace(admin.AdminsPassword))
+                return (false, "Password is required.");
+            
+            if (string.IsNullOrWhiteSpace(admin.Role))
+                return (false, "Role is required.");
 
+            // Business logic
             admin.AdminsPassword = HashPassword(admin.AdminsPassword);
-            return _dataService.AddAdmin(admin);
+            bool success = _dataService.AddAdmin(admin);
+            
+            return success ? (true, string.Empty) : (false, "Failed to create admin.");
         }
 
         public List<Admins> GetAllAdmins()
@@ -30,9 +52,13 @@ namespace AWSCloudClub_BusinessLogic
 
         public void RemoveAdmin(string adminId) => _dataService.RemoveAdmin(adminId);
 
-        public List<Admins> GetAdminByEmail(string email)
+        public (List<Admins>? Admins, string ErrorMessage) GetAdminByEmail(string email)
         {
-            return _dataService.GetAdminByEmail(email);
+            if (string.IsNullOrWhiteSpace(email))
+                return (null, "Email is required.");
+            
+            var admins = _dataService.GetAdminByEmail(email);
+            return (admins, string.Empty);
         }
 
         private static string HashPassword(string password)

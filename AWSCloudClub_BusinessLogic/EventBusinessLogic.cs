@@ -16,17 +16,30 @@ namespace AWSCloudClub_BusinessLogic
 
         public Task<List<Events>> GetAllEventsAsync() => _dataService.GetAllEventsAsync();
 
-        public string CreateEvent(Events ev)
+        public (string EventId, string ErrorMessage) CreateEvent(Events ev)
         {
-            if (ev == null) return string.Empty;
-            if (string.IsNullOrWhiteSpace(ev.EventID) || string.IsNullOrWhiteSpace(ev.EventName)) return string.Empty;
+            if (ev == null)
+                return (string.Empty, "Event data is required.");
+            
+            if (string.IsNullOrWhiteSpace(ev.EventID))
+                return (string.Empty, "EventID is required.");
+            
+            if (string.IsNullOrWhiteSpace(ev.EventName))
+                return (string.Empty, "Event name is required.");
+            
+            if (string.IsNullOrWhiteSpace(ev.EventDate))
+                return (string.Empty, "Event date is required.");
+            
+            if (string.IsNullOrWhiteSpace(ev.Description))
+                return (string.Empty, "Event description is required.");
 
             // ensure EventID is unique
             var existing = _dataService.SearchEventByID(ev.EventID);
-            if (existing != null && existing.Count > 0) return string.Empty;
+            if (existing != null && existing.Count > 0)
+                return (string.Empty, "EventID already exists.");
 
             _dataService.AddEvent(ev);
-            return ev.EventID;
+            return (ev.EventID, string.Empty);
         }
 
         public async Task<string> AddEventAsync(Events ev)
@@ -41,29 +54,49 @@ namespace AWSCloudClub_BusinessLogic
             return ev.EventID;
         }
 
-        public void RemoveEvent(string eventId)
+        public (bool Success, string ErrorMessage) RemoveEvent(string eventId)
         {
-            if (string.IsNullOrWhiteSpace(eventId)) return;
+            if (string.IsNullOrWhiteSpace(eventId))
+                return (false, "EventID is required.");
+            
             _dataService.RemoveEvent(eventId);
+            return (true, string.Empty);
         }
 
-        public void UpdateEvent(Events ev)
+        public (bool Success, string ErrorMessage) UpdateEvent(Events ev)
         {
-            if (ev == null) return;
-            if (string.IsNullOrWhiteSpace(ev.EventID)) return; // EventID is immutable
+            if (ev == null)
+                return (false, "Event data is required.");
+            
+            if (string.IsNullOrWhiteSpace(ev.EventID))
+                return (false, "EventID is required.");
+            
+            if (string.IsNullOrWhiteSpace(ev.EventName))
+                return (false, "Event name is required.");
+
             _dataService.UpdateEvent(ev);
+            return (true, string.Empty);
         }
 
-        public Task<bool> UpdateEventAsync(string eventId, Events ev)
+        public async Task<(bool Success, string ErrorMessage)> UpdateEventAsync(string eventId, Events ev)
         {
-            if (string.IsNullOrWhiteSpace(eventId) || ev == null) return Task.FromResult(false);
-            return _dataService.UpdateEventAsync(eventId, ev);
+            if (string.IsNullOrWhiteSpace(eventId))
+                return (false, "EventID is required.");
+            
+            if (ev == null)
+                return (false, "Event data is required.");
+
+            bool success = await _dataService.UpdateEventAsync(eventId, ev);
+            return success ? (true, string.Empty) : (false, "Event not found or update failed.");
         }
 
-        public List<Events> SearchEventByID(string eventId)
+        public (List<Events> Events, string ErrorMessage) SearchEventByID(string eventId)
         {
-            if (string.IsNullOrWhiteSpace(eventId)) return new List<Events>();
-            return _dataService.SearchEventByID(eventId);
+            if (string.IsNullOrWhiteSpace(eventId))
+                return (new List<Events>(), "EventID is required.");
+            
+            var events = _dataService.SearchEventByID(eventId);
+            return (events, string.Empty);
         }
 
         private string GenerateUniqueEventId()

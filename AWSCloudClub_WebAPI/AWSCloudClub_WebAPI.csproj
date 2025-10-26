@@ -10,6 +10,7 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.19" />
     <PackageReference Include="MySqlConnector" Version="2.4.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="DotNetEnv" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>

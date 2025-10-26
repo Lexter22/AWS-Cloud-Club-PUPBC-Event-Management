@@ -5,10 +5,11 @@ using AWSCloudClub_BusinessLogic;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// for swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+
 
 // Register data services
 builder.Services.AddSingleton<DatabaseHelper>();
