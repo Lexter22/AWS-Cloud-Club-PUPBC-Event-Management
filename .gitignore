@@ -1,0 +1,10 @@
+bin/
+obj/
+.vs/
+*.log
+*.tmp
+
+appsettings.json
+.env
+
+.DS_Store
