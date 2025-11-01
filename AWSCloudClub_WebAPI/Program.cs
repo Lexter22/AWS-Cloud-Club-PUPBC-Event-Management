@@ -11,6 +11,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
 
+
 // Register data services
 builder.Services.AddSingleton<DatabaseHelper>();
 builder.Services.AddScoped<MemberDataService>();
