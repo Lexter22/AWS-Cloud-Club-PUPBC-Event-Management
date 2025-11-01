@@ -23,7 +23,7 @@ namespace AWSCloudClub_WebAPI.Controllers
             try
             {
                 await _emailService.SendEmailAsync(ev);
-                return Ok(new { message = "Email triggered" });
+                return Ok(new { message = "Email Sent!" });
             }
             catch (System.Exception ex)
             {
