@@ -10,8 +10,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
-
-
 // Register data services
 builder.Services.AddSingleton<DatabaseHelper>();
 builder.Services.AddScoped<MemberDataService>();
@@ -23,6 +21,8 @@ builder.Services.AddScoped<TicketDataService>();
 builder.Services.AddBusinessLogic();
 
 // Register email service
+
+builder.Services.Configure<AWSCloudClub_BusinessLogic.EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddScoped<EventEmailService>();
 
 var app = builder.Build();
