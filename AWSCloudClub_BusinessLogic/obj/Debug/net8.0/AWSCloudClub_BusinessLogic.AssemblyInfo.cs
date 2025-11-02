@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AWSCloudClub_BusinessLogic")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b5464dfe2cd38407e92e6be2d08ec7646f29bd33")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e3a773c808d042e6c333ffafe2f4e1d41d550d0d")]
 [assembly: System.Reflection.AssemblyProductAttribute("AWSCloudClub_BusinessLogic")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AWSCloudClub_BusinessLogic")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
