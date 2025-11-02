@@ -4,30 +4,27 @@ using MailKit.Net.Smtp;
 using MimeKit;
 using AWSCloudClub_Common.Models;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Logging;
 using MailKit.Security;
 
 namespace AWSCloudClub_BusinessLogic
 {
     public class EventEmailService
     {
-        private readonly EmailSettings _settings;
-        private readonly ILogger<EventEmailService> _logger;
+        private readonly IConfiguration _configuration;
 
-        public EventEmailService(IOptions<EmailSettings> options, ILogger<EventEmailService> logger)
+        public EventEmailService(IConfiguration configuration)
         {
-            _settings = options?.Value ?? new EmailSettings();
-            _logger = logger;
+            _configuration = configuration;
+            
         }
         public async System.Threading.Tasks.Task SendEmailAsync(string recipientEmail, Events ev, System.Threading.CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(recipientEmail)) throw new ArgumentException("recipientEmail is required", nameof(recipientEmail));
             if (ev == null) throw new ArgumentNullException(nameof(ev));
 
-            var fromName = _settings.FromName ?? "AWS Cloud Club";
-            var fromAddress = _settings.FromAddress ?? "no-reply@awscloudclub.local";
-            var toName = _settings.ToName ?? "Recipient";
+            var fromName = _configuration["EmailSettings:FromName"] ?? "AWS Cloud Club";
+            var fromAddress = _configuration["EmailSettings:FromAddress"] ?? "no-reply@awscloudclub.local";
+            var toName = _configuration["EmailSettings:ToName"] ?? "Recipient";
 
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress(fromName, fromAddress));
@@ -36,6 +33,7 @@ namespace AWSCloudClub_BusinessLogic
             var safeEventName = string.IsNullOrWhiteSpace(ev.EventName) ? "(no title)" : ev.EventName;
             message.Subject = $"AWS Cloud Club - New Event: {safeEventName}";
 
+            // Build both Text and HTML bodies
             var textBody =
                 "A new event has been created on AWS Cloud Club." +
                 "\n\n" +
@@ -65,35 +63,30 @@ namespace AWSCloudClub_BusinessLogic
             };
             message.Body = builder.ToMessageBody();
 
-            var host = _settings.SmtpHost ?? "sandbox.smtp.mailtrap.io";
-            var port = (_settings.SmtpPort > 0) ? _settings.SmtpPort : 2525;
-            var username = _settings.SmtpUsername ?? string.Empty;
-            var password = _settings.SmtpPassword ?? string.Empty;
-            var enableTls = _settings.EnableTls;
+            var host = _configuration["EmailSettings:SmtpHost"] ?? "sandbox.smtp.mailtrap.io";
+            var portString = _configuration["EmailSettings:SmtpPort"] ?? "2525";
+            var username = _configuration["EmailSettings:SmtpUsername"] ?? string.Empty;
+            var password = _configuration["EmailSettings:SmtpPassword"] ?? string.Empty;
+            var enableTlsString = _configuration["EmailSettings:EnableTls"] ?? "true";
 
-            try
+            if (!int.TryParse(portString, out var port)) port = 2525;
+            var enableTls = bool.TryParse(enableTlsString, out var parsedTls) ? parsedTls : true;
+
+            using var client = new SmtpClient();
+            var socketOption = enableTls ? SecureSocketOptions.StartTls : SecureSocketOptions.Auto;
+            await client.ConnectAsync(host, port, socketOption, cancellationToken).ConfigureAwait(false);
+
+            if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
             {
-                using var client = new SmtpClient();
-                var socketOption = enableTls ? SecureSocketOptions.StartTls : SecureSocketOptions.Auto;
-                await client.ConnectAsync(host, port, socketOption, cancellationToken).ConfigureAwait(false);
-
-                if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
-                {
-                    await client.AuthenticateAsync(username, password, cancellationToken).ConfigureAwait(false);
-                }
-
-                await client.SendAsync(message, cancellationToken).ConfigureAwait(false);
-                await client.DisconnectAsync(true, cancellationToken).ConfigureAwait(false);
+                await client.AuthenticateAsync(username, password, cancellationToken).ConfigureAwait(false);
             }
-            catch (Exception ex)
-            {
-               
-                _logger?.LogError(ex, "Failed to send event email (async)");
-            }
+
+            await client.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            await client.DisconnectAsync(true, cancellationToken).ConfigureAwait(false);
         }
         public async System.Threading.Tasks.Task SendEmailAsync(Events ev, System.Threading.CancellationToken cancellationToken = default)
         {
-            var configuredRecipient = _settings.ToAddress ?? string.Empty;
+            var configuredRecipient = _configuration["EmailSettings:ToAddress"];
             if (string.IsNullOrWhiteSpace(configuredRecipient))
             {
                 throw new InvalidOperationException("No recipient configured!");
