@@ -33,7 +33,6 @@ namespace AWSCloudClub_BusinessLogic
             var safeEventName = string.IsNullOrWhiteSpace(ev.EventName) ? "(no title)" : ev.EventName;
             message.Subject = $"AWS Cloud Club - New Event: {safeEventName}";
 
-            // Build both Text and HTML bodies
             var textBody =
                 "A new event has been created on AWS Cloud Club." +
                 "\n\n" +
@@ -42,26 +41,6 @@ namespace AWSCloudClub_BusinessLogic
                 $"Event Date: {ev.EventDate}\n" +
                 $"Description: {ev.Description}\n\n" +
                 "--\nAWS Cloud Club";
-
-            string HtmlEncode(string s) => System.Net.WebUtility.HtmlEncode(s ?? string.Empty);
-            var htmlBody = $@"<html><body>
-            <h2>New event created</h2>
-                <p>A new event has been created on AWS Cloud Club.</p>
-                    <table>
-                        <tr><td><strong>Event ID:</strong></td><td>{HtmlEncode(ev.EventID)}</td></tr>
-                        <tr><td><strong>Event Name:</strong></td><td>{HtmlEncode(ev.EventName)}</td></tr>
-                        <tr><td><strong>Event Date:</strong></td><td>{HtmlEncode(ev.EventDate)}</td></tr>
-                        <tr><td><strong>Description:</strong></td><td>{HtmlEncode(ev.Description).Replace("\n", "<br/>")}</td></tr>
-                        </table>
-                <p>--<br/>AWS Cloud Club</p>
-            </body></html>";
-
-            var builder = new BodyBuilder
-            {
-                TextBody = textBody,
-                HtmlBody = htmlBody
-            };
-            message.Body = builder.ToMessageBody();
 
             var host = _configuration["EmailSettings:SmtpHost"] ?? "sandbox.smtp.mailtrap.io";
             var portString = _configuration["EmailSettings:SmtpPort"] ?? "2525";
