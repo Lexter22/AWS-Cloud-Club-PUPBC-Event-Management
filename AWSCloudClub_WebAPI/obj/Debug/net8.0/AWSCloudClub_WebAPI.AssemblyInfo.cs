@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AWSCloudClub_WebAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6b6523c7f7fcacd0cf9d0db769518c2d1e17833e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+19f6561fd6d260c9ac767d998adf7e0d5d70faf1")]
 [assembly: System.Reflection.AssemblyProductAttribute("AWSCloudClub_WebAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AWSCloudClub_WebAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
