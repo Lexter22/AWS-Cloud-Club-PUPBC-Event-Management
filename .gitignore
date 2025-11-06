@@ -1,10 +1,25 @@
-bin/
-obj/
+# Build output (ignore in all subfolders)
+**/bin/
+**/obj/
+
+# IDE/workspace
 .vs/
+.vscode/
+*.user
+*.suo
+
+# Logs / temp
 *.log
 *.tmp
 
+# Local configuration (keep secrets out of git)
 appsettings.json
+appsettings.*.json
 .env
 
+# OS files
 .DS_Store
+
+# Test/coverage
+TestResults/
+coverage/
