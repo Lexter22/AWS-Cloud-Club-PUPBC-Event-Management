@@ -1,4 +1,4 @@
-# Build output (ignore in all subfolders)
+# Build output para di lumabas yung new changes lagi sa dll
 **/bin/
 **/obj/
 
@@ -12,7 +12,6 @@
 *.log
 *.tmp
 
-# Local configuration (keep secrets out of git)
 appsettings.json
 appsettings.*.json
 .env
